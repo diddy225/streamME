@@ -1,24 +1,58 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
+import { Form, Button, Label } from "semantic-ui-react";
 
 class StreamCreate extends Component {
-  renderInput(formProps) {
-    console.log(formProps);
+
+  renderError = ({error, touched}) => {
+    if(touched && error) {
+      return (
+        <Label basic color='red' pointing>{error}</Label>
+      )
+    }
+  }
+  renderInput = ({ label, input, meta }) => {
     return (
-      <input {...formProps.input} />
+        <Form.Field>
+          <label>{label}</label>
+          <input {...input} autoComplete="off"/>
+          {this.renderError(meta)}
+        </Form.Field>
     );
   }
 
+  onSubmit(formValues, dispatch) {
+    dispatch(reset('streamCreate'))
+  }
+
   render() {
+    const { handleSubmit } = this.props;
     return (
-      <form>
-        <Field name="title" component={this.renderInput} />
-        <Field name="description" component={this.renderInput} />
-      </form>
+      <Form widths={"equal"} onSubmit={handleSubmit(this.onSubmit)}>
+        <Field name="title" label="Enter Title" component={this.renderInput} />
+        <Field
+          name="description"
+          label="Enter Description"
+          component={this.renderInput}
+        />
+        <Button primary>Submit</Button>
+      </Form>
     );
   }
 }
 
+const validate = formValues => {
+  const errors = {};
+  if (!formValues.title) {
+    errors.title = "You must enter a title";
+  }
+  if (!formValues.description) {
+    errors.description = "You must enter a description";
+  }
+  return errors;
+};
+
 export default reduxForm({
-  form: "streamCreate"
+  form: "streamCreate",
+  validate
 })(StreamCreate);
