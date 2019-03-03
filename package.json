@@ -1,0 +1,17 @@
+{
+  "name": "stream-me",
+  "version": "1.0.0",
+  "description": "Video Streaming App",
+  "main": "server.js",
+  "repository": "git@github.com:diddy225/streamME.git",
+  "author": "Matthew C <matthew.j.carpenter1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
