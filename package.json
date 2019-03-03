@@ -2,7 +2,13 @@
   "name": "stream-me",
   "version": "1.0.0",
   "description": "Video Streaming App",
-  "main": "server.js",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "build": "cd client && yarn --only=dev && yarn install && yarn run build",
+    "server": "cd server && nodemon server.js",
+    "client": "cd client && yarn start"
+  },
+  "main": "server",
   "repository": "git@github.com:diddy225/streamME.git",
   "author": "Matthew C <matthew.j.carpenter1@gmail.com>",
   "license": "MIT",
