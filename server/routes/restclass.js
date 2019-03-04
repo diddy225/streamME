@@ -8,7 +8,7 @@ class RestfulAPI {
   allStreams() {
     this.app.get(`/${this.resource}`, (req,res) => {
       this.model.find({})
-        .then( (data) => {
+        .then((data) => {
           res.json(data);
         })
         .catch((err) => {
@@ -56,8 +56,8 @@ class RestfulAPI {
   deleteStream() {
     this.app.delete(`/${this.resource}/:id`, (req, res) => {
       this.model.findByIdAndDelete(req.params.id)
-      .then(() => {
-        res.json({success: 'Item has been deleted'})
+      .then((data) => {
+        res.send(data._id)
       })
       .catch((err) => {
         res.json(err)

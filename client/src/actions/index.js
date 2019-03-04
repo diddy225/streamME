@@ -9,6 +9,7 @@ import {
   EDIT_STREAM
 } from "./types";
 
+//Login/Out
 export const signIn = userId => {
   return {
     type: SIGN_IN,
@@ -22,6 +23,7 @@ export const signOut = () => {
   };
 };
 
+//CRUD Routes
 export const createStream = formValues => async dispatch => {
   const response = await streams.post("/streams", formValues);
 
@@ -47,7 +49,7 @@ export const editStream = (id, formValues) => async dispatch => {
 };
 
 export const deleteStream = id => async dispatch => {
-  await streams.delete(`/streams/${id}`);
+  const response = await streams.delete(`/streams/${id}`);
 
-  dispatch({ type: DELETE_STREAM, payload: id });
+  dispatch({ type: DELETE_STREAM, payload: response.data });
 };
