@@ -19,7 +19,7 @@ class RestfulAPI {
 
   findStream() {
     this.app.get(`/${this.resource}/:id`, (req, res) => {
-      this.model.findById({ id: req.params.id })
+      this.model.findById(req.params.id)
       .then((data) => {
         res.json(data)
       })
@@ -41,13 +41,21 @@ class RestfulAPI {
     })
   }
 
-  // updateStream() {
-
-  // }
+  updateStream() {
+    this.app.put(`/${this.resource}/:id`, (req, res) => {
+      this.model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      .then((data) => {
+        res.json(data)
+      })
+      .catch((err) => {
+        res.json(err)
+      })
+    })
+  }
 
   deleteStream() {
     this.app.delete(`/${this.resource}/:id`, (req, res) => {
-      this.model.findOneAndDelete({_id: req.params.id})
+      this.model.findByIdAndDelete(req.params.id)
       .then(() => {
         res.json({success: 'Item has been deleted'})
       })
