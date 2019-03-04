@@ -1,18 +1,31 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchStreams } from "../../actions";
-import { List } from "semantic-ui-react";
+import { List, Button } from "semantic-ui-react";
 
 class StreamList extends Component {
   componentDidMount() {
     this.props.fetchStreams();
   }
 
+  renderAdmin(stream) {
+    if (stream.userId === this.props.currentUserId && stream.userId !== null) {
+      return (
+        <List.Content floated="right">
+          <Button primary>Edit</Button>
+          <Button negative>Delete</Button>
+        </List.Content>
+      );
+    }
+  }
+
   renderList() {
     return this.props.streams.map(stream => {
       return (
-        <List.Item key={stream._id}>
-          <List.Icon verticalAlign='middle' size="large" name="video camera" />
+        <List.Item style={{padding:'10px'}}key={stream._id}>
+          {this.renderAdmin(stream)}
+          <List.Icon verticalAlign="middle" size="large" name="video camera" />
           <List.Content>
             <List.Header>{stream.title}</List.Header>
             <List.Description>{stream.description}</List.Description>
@@ -22,20 +35,34 @@ class StreamList extends Component {
     });
   }
 
+  renderCreateButtons() {
+    if (this.props.isSignedIn) {
+      return (
+        <div>
+          <Button primary floated="right" as={Link} to="/streams/new">
+            Create Stream
+          </Button>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div>
         <h2>Streams</h2>
         <List celled>{this.renderList()}</List>
+        {this.renderCreateButtons()}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
-    streams: Object.values(state.streams)
+    streams: Object.values(state.streams),
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 

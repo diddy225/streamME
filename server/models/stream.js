@@ -11,6 +11,10 @@ const StreamSchema = new mongoose.Schema({
     required: true,
     maxlength: 240
   },
+  userId:{
+    type: String,
+    trim: true
+  },
   date: {
     type: Date,
     default: Date.now
