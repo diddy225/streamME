@@ -1,28 +1,31 @@
 import React, { Component } from "react";
-import { Field, reduxForm, reset } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import { Form, Button, Label } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { createStream } from "../../actions";
 
 class StreamCreate extends Component {
-
-  renderError = ({error, touched}) => {
-    if(touched && error) {
+  renderError = ({ error, touched }) => {
+    if (touched && error) {
       return (
-        <Label basic color='red' pointing>{error}</Label>
-      )
+        <Label basic color="red" pointing>
+          {error}
+        </Label>
+      );
     }
-  }
+  };
   renderInput = ({ label, input, meta }) => {
     return (
-        <Form.Field>
-          <label>{label}</label>
-          <input {...input} autoComplete="off"/>
-          {this.renderError(meta)}
-        </Form.Field>
+      <Form.Field>
+        <label>{label}</label>
+        <input {...input} autoComplete="off" />
+        {this.renderError(meta)}
+      </Form.Field>
     );
-  }
+  };
 
-  onSubmit(formValues, dispatch) {
-    dispatch(reset('streamCreate'))
+  onSubmit = (formValues) => {
+    this.props.createStream(formValues);
   }
 
   render() {
@@ -52,7 +55,12 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
   form: "streamCreate",
   validate
 })(StreamCreate);
+
+export default connect(
+  null,
+  { createStream }
+)(formWrapped);

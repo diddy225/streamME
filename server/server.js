@@ -11,9 +11,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("../client/build"));
 }
 
-//Routes
-
-
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Streame", {
     useNewUrlParser: true
@@ -22,6 +19,9 @@ mongoose
   .catch(err => {
     console.log(err);
   });
+
+  //Routes
+require('./routes/streams')(app);
 
 app.listen(PORT, () => {
   console.log(`==> 🛰️ API Server now listening on PORT ${PORT}!`);
