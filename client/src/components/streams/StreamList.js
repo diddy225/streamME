@@ -13,8 +13,10 @@ class StreamList extends Component {
     if (stream.userId === this.props.currentUserId && stream.userId !== null) {
       return (
         <List.Content floated="right">
-          <Button primary>Edit</Button>
           <Button negative>Delete</Button>
+          <Button as={Link} to={`/streams/edit/${stream._id}`} primary>
+            Edit
+          </Button>
         </List.Content>
       );
     }
@@ -23,7 +25,7 @@ class StreamList extends Component {
   renderList() {
     return this.props.streams.map(stream => {
       return (
-        <List.Item style={{padding:'10px'}}key={stream._id}>
+        <List.Item style={{ padding: "10px" }} key={stream._id}>
           {this.renderAdmin(stream)}
           <List.Icon verticalAlign="middle" size="large" name="video camera" />
           <List.Content>
