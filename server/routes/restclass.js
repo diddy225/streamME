@@ -42,7 +42,7 @@ class RestfulAPI {
   }
 
   updateStream() {
-    this.app.put(`/${this.resource}/:id`, (req, res) => {
+    this.app.patch(`/${this.resource}/:id`, (req, res) => {
       this.model.findByIdAndUpdate(req.params.id, req.body, {new: true})
       .then((data) => {
         res.json(data)

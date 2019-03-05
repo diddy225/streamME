@@ -13,7 +13,9 @@ class StreamList extends Component {
     if (stream.userId === this.props.currentUserId && stream.userId !== null) {
       return (
         <List.Content floated="right">
-          <Button negative>Delete</Button>
+          <Button as={Link} to={`/streams/delete/${stream._id}`} negative>
+            Delete
+          </Button>
           <Button as={Link} to={`/streams/edit/${stream._id}`} primary>
             Edit
           </Button>
